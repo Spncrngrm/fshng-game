@@ -1,0 +1,24 @@
+.menu-container {
+    text-align: center;
+    padding-top: 4rem;
+  }
+  
+  .menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .note {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #888;
+  }
+  

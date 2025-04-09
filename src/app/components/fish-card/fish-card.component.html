@@ -1,0 +1,10 @@
+<div class="fish-card">
+  <img [src]="fish.image" [alt]="fish.name" width="32" height="32" />
+  <div class="info">
+    <h3>{{ fish.name }}</h3>
+    <p><strong>Rarity:</strong> {{ fish.rarity }}</p>
+    <p><strong>Length:</strong> {{ fish.lengthMin }}–{{ fish.lengthMax }} cm</p>
+    <p><strong>Weight:</strong> {{ fish.weightMin }}–{{ fish.weightMax }} kg</p>
+    <p><strong>Price/kg:</strong> ${{ fish.pricePerKg }}</p>
+  </div>
+</div>

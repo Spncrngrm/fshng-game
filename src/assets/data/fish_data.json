@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Bubbler",
+    "lengthMin": 100,
+    "lengthMax": 120,
+    "color": "Orange",
+    "rarity": "Uncommon",
+    "weightMin": 5,
+    "weightMax": 8,
+    "pricePerKg": 2.07,
+    "image": "assets/fish/fish001_bubbler.png"
+  },
+  {
+    "name": "Coralfin",
+    "lengthMin": 110,
+    "lengthMax": 125,
+    "color": "Silver",
+    "rarity": "Rare",
+    "weightMin": 8,
+    "weightMax": 10,
+    "pricePerKg": 5.53,
+    "image": "assets/fish/fish002_coralfin.png"
+  },
+  {
+    "name": "Snapjack",
+    "lengthMin": 70,
+    "lengthMax": 90,
+    "color": "Silver",
+    "rarity": "Uncommon",
+    "weightMin": 2,
+    "weightMax": 5,
+    "pricePerKg": 23.98,
+    "image": "assets/fish/fish003_snapjack.png"
+  },
+  {
+    "name": "Glimmerfish",
+    "lengthMin": 35,
+    "lengthMax": 45,
+    "color": "Red",
+    "rarity": "Rare",
+    "weightMin": 2,
+    "weightMax": 5,
+    "pricePerKg": 32.28,
+    "image": "assets/fish/fish004_glimmerfish.png"
+  },
+  {
+    "name": "Shadowfin",
+    "lengthMin": 100,
+    "lengthMax": 110,
+    "color": "Silver",
+    "rarity": "Legendary",
+    "weightMin": 5,
+    "weightMax": 8,
+    "pricePerKg": 13.83,
+    "image": "assets/fish/fish005_shadowfin.png"
+  }
+]

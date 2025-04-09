@@ -1,0 +1,6 @@
+<app-home *ngIf="view === 'home'"></app-home>
+<app-menu *ngIf="view === 'menu'" (viewChange)="setView($event)"></app-menu>
+<app-fishing *ngIf="view === 'fishing'"></app-fishing>
+<div *ngIf="view === 'cards'" class="fish-list">
+  <app-fish-card *ngFor="let fish of fishList" [fish]="fish"></app-fish-card>
+</div>

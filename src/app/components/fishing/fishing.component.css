@@ -1,0 +1,36 @@
+.fishing-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #0f3a5c;
+    overflow: hidden;
+  }
+  
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(173, 216, 230, 0.8);
+    cursor: pointer;
+    animation: fadeOut 3s ease-out forwards; /* Was 1s */
+  }
+  
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; transform: scale(0.5); }
+  }
+  
+  .message {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: #fff;
+  }
+  
+  .start-area {
+    display: flex;
+    justify-content: center;
+    padding-top: 30vh;
+  }
+  

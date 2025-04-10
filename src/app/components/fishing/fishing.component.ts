@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FishService } from '../../services/fish.service';
+import { Fish } from '../../models/fish.model';
+import { GameStateService } from '../../services/game-state.service';
 
 interface Bubble {
   x: number;
   y: number;
   size: number;
+  clicked: boolean;
 }
 
 @Component({
@@ -14,43 +18,61 @@ interface Bubble {
   templateUrl: './fishing.component.html',
   styleUrls: ['./fishing.component.css']
 })
-export class FishingComponent {
+export class FishingComponent implements OnInit {
   bubbles: Bubble[] = [];
   currentIndex = 0;
   message = '';
+  allFish: Fish[] = [];
+  caughtFishImage: string | null = null;
+  fishingInProgress = false;
+
+  constructor(
+    private fishService: FishService,
+    private gameState: GameStateService
+  ) {}
+
+  ngOnInit() {
+    this.fishService.getFish().subscribe((fish) => {
+      this.allFish = fish;
+    });
+  }
 
   startFishing() {
+    if (this.fishingInProgress) return;
+
+    this.fishingInProgress = true;
     this.bubbles = [];
     this.message = '';
+    this.caughtFishImage = null;
     this.currentIndex = 0;
-  
+
     const bubbleCount = 5;
     const initialSize = 60;
-    const baseDelay = 1000; // delay before next bubble appears
-    const baseLifetime = 3000; // was too short — now longer per your request
-  
+    const baseDelay = 1000;
+    const baseLifetime = 3000;
+
     for (let i = 0; i < bubbleCount; i++) {
       const size = initialSize - i * 10;
       const x = Math.random() * (window.innerWidth - size);
       const y = Math.random() * (window.innerHeight - size);
-  
-      // Create each bubble with delay
+
       setTimeout(() => {
-        this.bubbles.push({ x, y, size });
-  
-        // Timeout for this specific bubble's disappearance
+        if (!this.fishingInProgress) return;
+
+        this.bubbles.push({ x, y, size, clicked: false });
+
         setTimeout(() => {
-          if (this.currentIndex <= i) {
+          if (this.currentIndex <= i && this.fishingInProgress) {
             this.failCatch();
           }
         }, baseLifetime);
       }, i * baseDelay);
     }
   }
-  
 
   clickBubble(index: number) {
-    if (index === this.currentIndex) {
+    if (index === this.currentIndex && !this.bubbles[index].clicked) {
+      this.bubbles[index].clicked = true;
       this.currentIndex++;
       if (this.currentIndex === 5) {
         this.catchFish();
@@ -61,13 +83,50 @@ export class FishingComponent {
   }
 
   catchFish() {
-    this.message = '🎣 You caught a fish!';
+    const roll = Math.floor(Math.random() * 10001);
+
+    const rarityTable = [
+      { index: 0, min: 0, max: 3999 },       // Bubbler
+      { index: 1, min: 4000, max: 4999 },    // Coralfin
+      { index: 2, min: 5000, max: 8999 },    // Snapjack
+      { index: 3, min: 9000, max: 9999 },    // Glimmerfish
+      { index: 4, min: 10000, max: 10000 }   // Shadowfin
+    ];
+
+    const matched = rarityTable.find(r => roll >= r.min && roll <= r.max);
+
+    if (matched && this.allFish[matched.index]) {
+      const fish = this.allFish[matched.index];
+      const length = this.randomInRange(fish.lengthMin, fish.lengthMax);
+      const weight = this.randomInRange(fish.weightMin, fish.weightMax);
+
+      const caughtFish: Fish = {
+        ...fish,
+        length,
+        weight,
+        image: fish.image ?? undefined
+      };
+
+      this.message = `You caught a ${caughtFish.name}! (${weight.toFixed(1)} kg, ${length.toFixed(1)} cm)`;
+      this.caughtFishImage = caughtFish.image ?? null;
+      this.gameState.addToNet(caughtFish); // ✅ Add to net
+    } else {
+      this.message = 'Nothing caught!';
+      this.caughtFishImage = null;
+    }
+
     this.bubbles = [];
-    // TODO: Add random fish logic here
+    this.fishingInProgress = false;
   }
 
   failCatch() {
-    this.message = '❌ The fish escaped!';
+    this.message = 'The fish escaped!';
+    this.caughtFishImage = null;
     this.bubbles = [];
+    this.fishingInProgress = false;
+  }
+
+  randomInRange(min: number, max: number): number {
+    return Math.random() * (max - min) + min;
   }
 }

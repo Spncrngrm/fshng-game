@@ -1,14 +1,21 @@
 <div class="fishing-container">
-    <div *ngIf="bubbles.length === 0" class="start-area">
-      <button (click)="startFishing()">Cast Line</button>
-    </div>
+    <div class="message">{{ message }}</div>
   
-    <div class="bubble" 
-         *ngFor="let bubble of bubbles; let i = index" 
-         [ngStyle]="{ left: bubble.x + 'px', top: bubble.y + 'px', width: bubble.size + 'px', height: bubble.size + 'px' }"
-         (click)="clickBubble(i)">
-    </div>
+    <img *ngIf="caughtFishImage" [src]="caughtFishImage" alt="Caught Fish" class="caught-fish-image" />
   
-    <div *ngIf="message" class="message">{{ message }}</div>
+    <div
+        *ngFor="let bubble of bubbles; let i = index"
+        class="bubble"
+        [class.clicked]="bubble.clicked"
+        [style.left.px]="bubble.x"
+        [style.top.px]="bubble.y"
+        [style.width.px]="bubble.size"
+        [style.height.px]="bubble.size"
+        (click)="clickBubble(i)"
+    ></div>
+  
+    <div class="start-area" *ngIf="!fishingInProgress">
+      <button class="cast-button" (click)="startFishing()">Cast Line</button>
+    </div>
   </div>
   

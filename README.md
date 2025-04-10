@@ -2,7 +2,7 @@
 
 
     git add .
-    git commit -m "Your message goes here"
+    git commit -m "see caught fish, net storage, view the net, remove fish from the net, saving to web browser"
     git push
 
 

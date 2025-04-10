@@ -1,0 +1,14 @@
+<div class="net-container">
+    <h2>Your Net</h2>
+    <div *ngIf="gameState.net.length === 0">No fish in the net yet.</div>
+    <div *ngFor="let fish of gameState.net; let i = index" class="fish-card">
+      <img [src]="fish.image" alt="{{ fish.name }}" />
+      <div class="details">
+        <p><strong>{{ fish.name }}</strong></p>
+        <p>Weight: {{ fish.weight.toFixed(1) }} kg</p>
+        <p>Length: {{ fish.length.toFixed(1) }} cm</p>
+      </div>
+      <button class="remove-button" (click)="removeFish(i)">Remove</button>
+    </div>
+  </div>
+  

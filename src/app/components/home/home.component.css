@@ -1,12 +1,17 @@
 .home-container {
     text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
     padding-top: 5rem;
+    background-color: #0f3a5c;
   }
   
   .title {
     font-size: 4rem;
     margin-bottom: 2rem;
     letter-spacing: 4px;
+    color: #fff;
   }
   
   .sprite-preview img {
@@ -18,6 +23,6 @@
   .instruction {
     margin-top: 2rem;
     font-size: 1.2rem;
-    color: #666;
+    color: #fff;
   }
   

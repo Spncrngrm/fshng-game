@@ -3,19 +3,27 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { FishCardComponent } from './components/fish-card/fish-card.component';
+import { FishingComponent } from './components/fishing/fishing.component';
+import { NetComponent } from './components/net/net.component';
 import { FishService } from './services/fish.service';
 import { Fish } from './models/fish.model';
-import { FishingComponent } from './components/fishing/fishing.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HomeComponent, MenuComponent, FishCardComponent, FishingComponent],
+  imports: [
+    CommonModule,
+    HomeComponent,
+    MenuComponent,
+    FishCardComponent,
+    FishingComponent,
+    NetComponent
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  view: 'home' | 'menu' | 'cards' | 'fishing' = 'home';
+  view: 'home' | 'menu' | 'cards' | 'fishing' | 'net' = 'home';
   fishList: Fish[] = [];
 
   constructor(private fishService: FishService) {}
@@ -33,11 +41,7 @@ export class AppComponent {
     this.view = 'menu';
   }
 
-  setView(newView: string) {
-    if (['home', 'menu', 'cards', 'fishing'].includes(newView)) {
-      this.view = newView as 'home' | 'menu' | 'cards' | 'fishing';
-    } else {
-      console.warn(`Invalid view: ${newView}`);
-    }
+  setView(view: 'home' | 'menu' | 'cards' | 'fishing' | 'net') {
+    this.view = view;
   }
 }

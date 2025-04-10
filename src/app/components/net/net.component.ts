@@ -11,11 +11,14 @@ import { Fish } from '../../models/fish.model';
   styleUrls: ['./net.component.css']
 })
 export class NetComponent {
-  @Output() viewChange = new EventEmitter<'home' | 'menu' | 'cards' | 'fishing' | 'net'>();
+  @Output() viewChange = new EventEmitter<'menu' | 'home' | 'cards' | 'fishing' | 'net'>();
 
   constructor(public gameState: GameStateService) {}
 
-  removeFish(index: number) {
+  sellFish(index: number) {
+    const fish = this.gameState.net[index];
+    const earned = fish.weight * fish.pricePerKg;
+    this.gameState.gold += Number(earned.toFixed(2));
     this.gameState.removeFromNet(index);
   }
 

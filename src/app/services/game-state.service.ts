@@ -6,12 +6,14 @@ import { Fish } from '../models/fish.model';
 })
 export class GameStateService {
   public net: Fish[] = [];
+  public gold: number = 0;
 
   constructor() {
     const saved = localStorage.getItem('fshng-save');
     if (saved) {
       const parsed = JSON.parse(saved);
       this.net = parsed.net || [];
+      this.gold = parsed.gold || 0;
     }
   }
 
@@ -30,7 +32,10 @@ export class GameStateService {
   }
 
   private saveState() {
-    const state = { net: this.net };
+    const state = {
+      net: this.net,
+      gold: this.gold
+    };
     localStorage.setItem('fshng-save', JSON.stringify(state));
   }
 }

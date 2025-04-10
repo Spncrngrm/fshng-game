@@ -2,8 +2,8 @@
 
 
     git add .
-    git commit -m "see caught fish, net storage, view the net, remove fish from the net, saving to web browser"
-    git push
+    git commit -m "sell fish, saveable money system created, and css major overhaul"
+    git push origin master:main --force
 
 
 FSHNG is a playful and educational fishing game built with Angular 19. Catch fish, manage your net, and learn sorting algorithms through visual interaction in a lively aquarium setting.

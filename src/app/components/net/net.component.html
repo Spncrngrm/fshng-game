@@ -1,14 +1,24 @@
 <div class="net-container">
-    <h2>Your Net</h2>
-    <div *ngIf="gameState.net.length === 0">No fish in the net yet.</div>
-    <div *ngFor="let fish of gameState.net; let i = index" class="fish-card">
-      <img [src]="fish.image" alt="{{ fish.name }}" />
-      <div class="details">
-        <p><strong>{{ fish.name }}</strong></p>
-        <p>Weight: {{ fish.weight.toFixed(1) }} kg</p>
-        <p>Length: {{ fish.length.toFixed(1) }} cm</p>
-      </div>
-      <button class="remove-button" (click)="removeFish(i)">Remove</button>
-    </div>
+  <div class="gold-display">Gold: ${{ gameState.gold.toFixed(2) }}</div>
+
+  <div *ngIf="gameState.net.length === 0" class="empty-net-message">
+    No fish in the net yet...
   </div>
-  
+
+  <div *ngFor="let fish of gameState.net; let i = index" class="fish-card">
+    <img [src]="fish.image" [alt]="fish.name" />
+    <div class="details">
+      <strong>{{ fish.name }}</strong><br />
+      {{ fish.weight.toFixed(1) }} kg<br />
+      {{ fish.length.toFixed(1) }} cm<br />
+      ${{ fish.pricePerKg.toFixed(2) }} per kg
+    </div>
+    <button class="sell-button" (click)="sellFish(i)">
+      Sell: ${{ (fish.weight * fish.pricePerKg).toFixed(2) }}
+    </button>
+  </div>
+
+  <div class="menu-button-container">
+    <button class="menu-button" (click)="goToMenu()">Back to Menu</button>
+  </div>
+</div>

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FishService } from '../../services/fish.service';
-import { Fish } from '../../models/fish.model';
 import { GameStateService } from '../../services/game-state.service';
+import { Fish } from '../../models/fish.model';
 
 interface Bubble {
   x: number;
@@ -18,7 +18,9 @@ interface Bubble {
   templateUrl: './fishing.component.html',
   styleUrls: ['./fishing.component.css']
 })
-export class FishingComponent implements OnInit {
+export class FishingComponent {
+  @Output() viewChange = new EventEmitter<'home' | 'menu' | 'cards' | 'fishing' | 'net'>();
+
   bubbles: Bubble[] = [];
   currentIndex = 0;
   message = '';
@@ -26,12 +28,7 @@ export class FishingComponent implements OnInit {
   caughtFishImage: string | null = null;
   fishingInProgress = false;
 
-  constructor(
-    private fishService: FishService,
-    private gameState: GameStateService
-  ) {}
-
-  ngOnInit() {
+  constructor(private fishService: FishService, private gameState: GameStateService) {
     this.fishService.getFish().subscribe((fish) => {
       this.allFish = fish;
     });
@@ -58,7 +55,6 @@ export class FishingComponent implements OnInit {
 
       setTimeout(() => {
         if (!this.fishingInProgress) return;
-
         this.bubbles.push({ x, y, size, clicked: false });
 
         setTimeout(() => {
@@ -86,15 +82,14 @@ export class FishingComponent implements OnInit {
     const roll = Math.floor(Math.random() * 10001);
 
     const rarityTable = [
-      { index: 0, min: 0, max: 3999 },       // Bubbler
-      { index: 1, min: 4000, max: 4999 },    // Coralfin
-      { index: 2, min: 5000, max: 8999 },    // Snapjack
-      { index: 3, min: 9000, max: 9999 },    // Glimmerfish
-      { index: 4, min: 10000, max: 10000 }   // Shadowfin
+      { index: 0, min: 0, max: 3999 },
+      { index: 1, min: 4000, max: 4999 },
+      { index: 2, min: 5000, max: 8999 },
+      { index: 3, min: 9000, max: 9999 },
+      { index: 4, min: 10000, max: 10000 }
     ];
 
     const matched = rarityTable.find(r => roll >= r.min && roll <= r.max);
-
     if (matched && this.allFish[matched.index]) {
       const fish = this.allFish[matched.index];
       const length = this.randomInRange(fish.lengthMin, fish.lengthMax);
@@ -103,20 +98,21 @@ export class FishingComponent implements OnInit {
       const caughtFish: Fish = {
         ...fish,
         length,
-        weight,
-        image: fish.image ?? undefined
+        weight
       };
 
       this.message = `You caught a ${caughtFish.name}! (${weight.toFixed(1)} kg, ${length.toFixed(1)} cm)`;
       this.caughtFishImage = caughtFish.image ?? null;
-      this.gameState.addToNet(caughtFish); // ✅ Add to net
+      this.bubbles = [];
+      this.fishingInProgress = false;
+
+      this.gameState.addToNet(caughtFish);
     } else {
       this.message = 'Nothing caught!';
       this.caughtFishImage = null;
+      this.bubbles = [];
+      this.fishingInProgress = false;
     }
-
-    this.bubbles = [];
-    this.fishingInProgress = false;
   }
 
   failCatch() {
@@ -124,6 +120,10 @@ export class FishingComponent implements OnInit {
     this.caughtFishImage = null;
     this.bubbles = [];
     this.fishingInProgress = false;
+  }
+
+  goBackToMenu() {
+    this.viewChange.emit('menu');
   }
 
   randomInRange(min: number, max: number): number {

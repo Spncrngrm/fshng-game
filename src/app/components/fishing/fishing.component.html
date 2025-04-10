@@ -1,21 +1,17 @@
 <div class="fishing-container">
-    <div class="message">{{ message }}</div>
-  
-    <img *ngIf="caughtFishImage" [src]="caughtFishImage" alt="Caught Fish" class="caught-fish-image" />
-  
-    <div
-        *ngFor="let bubble of bubbles; let i = index"
-        class="bubble"
-        [class.clicked]="bubble.clicked"
-        [style.left.px]="bubble.x"
-        [style.top.px]="bubble.y"
-        [style.width.px]="bubble.size"
-        [style.height.px]="bubble.size"
-        (click)="clickBubble(i)"
-    ></div>
-  
-    <div class="start-area" *ngIf="!fishingInProgress">
-      <button class="cast-button" (click)="startFishing()">Cast Line</button>
-    </div>
+  <div class="message">{{ message }}</div>
+
+  <div class="start-area" *ngIf="!fishingInProgress">
+    <button class="cast-button" (click)="startFishing()">Cast Line</button>
+    <button class="menu-button" (click)="goBackToMenu()">Back to Menu</button>
   </div>
-  
+
+  <img *ngIf="caughtFishImage" [src]="caughtFishImage" alt="Caught Fish" class="caught-fish-image" />
+
+  <div
+    *ngFor="let bubble of bubbles; let i = index"
+    class="bubble"
+    [ngStyle]="{ top: bubble.y + 'px', left: bubble.x + 'px', width: bubble.size + 'px', height: bubble.size + 'px', backgroundColor: bubble.clicked ? '#0f3a5c' : 'rgba(173, 216, 230, 0.8)' }"
+    (click)="clickBubble(i)"
+  ></div>
+</div>

@@ -2,11 +2,11 @@ import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { FishCardComponent } from './components/fish-card/fish-card.component';
 import { FishingComponent } from './components/fishing/fishing.component';
 import { NetComponent } from './components/net/net.component';
 import { FishService } from './services/fish.service';
 import { Fish } from './models/fish.model';
+
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,6 @@ import { Fish } from './models/fish.model';
     CommonModule,
     HomeComponent,
     MenuComponent,
-    FishCardComponent,
     FishingComponent,
     NetComponent
   ],
@@ -23,10 +22,7 @@ import { Fish } from './models/fish.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  view: 'home' | 'menu' | 'cards' | 'fishing' | 'net' = 'home';
-  fishList: Fish[] = [];
-
-  constructor(private fishService: FishService) {}
+  view: 'home' | 'menu' | 'fishing' | 'net' = 'home';
 
   @HostListener('window:keydown.space', ['$event'])
   handleSpacePress(event: KeyboardEvent) {
@@ -41,7 +37,9 @@ export class AppComponent {
     this.view = 'menu';
   }
 
-  setView(view: 'home' | 'menu' | 'cards' | 'fishing' | 'net') {
-    this.view = view;
+  setView(view: string) {
+    if (['home', 'menu', 'fishing', 'net'].includes(view)) {
+      this.view = view as 'home' | 'menu' | 'fishing' | 'net';
+    }
   }
 }

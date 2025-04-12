@@ -2,7 +2,7 @@
 
 
     git add .
-    git commit -m "sell fish, saveable money system created, and css major overhaul"
+    git commit -m "redone CSS on home screen"
     git push origin master:main --force
 
 

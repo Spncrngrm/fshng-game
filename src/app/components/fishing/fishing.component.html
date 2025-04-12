@@ -2,7 +2,12 @@
   <div class="message">{{ message }}</div>
 
   <div class="start-area" *ngIf="!fishingInProgress">
-    <button class="cast-button" (click)="startFishing()">Cast Line</button>
+    <button 
+      class="cast-button" 
+      (click)="startFishing()" 
+      [disabled]="gameState.isNetFull()">
+      Cast: {{ gameState.getNet().length }}/{{ gameState.netCapacity }} fish in net
+    </button>
     <button class="menu-button" (click)="goBackToMenu()">Back to Menu</button>
   </div>
 

@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: space-between;
   background: #0d2646;
-  padding: 25px;
+  padding: 15px;
   margin: 10px auto;
   max-width: 500px;
   width: 100%;
@@ -53,8 +53,15 @@
 
 .details {
   flex-grow: 1;
+  font-size: medium;
   text-align: left;
-  margin-left: 15px;
+  margin-left: 40px;
+}
+
+.faint {
+  color: rgba(255, 255, 255, 0.6); /* light text */
+  font-size: 0.9rem;
+  font-weight: 300;
 }
 
 .sell-button {

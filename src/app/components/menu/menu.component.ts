@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  @Output() viewChange = new EventEmitter<'home' | 'menu' | 'cards' | 'fishing' | 'net'>();
+  @Output() viewChange = new EventEmitter<'home' | 'menu' | 'fishing' | 'net' | 'aquariums'>();
 
   goFishing() {
     this.viewChange.emit('fishing');
@@ -18,16 +18,14 @@ export class MenuComponent {
   }
 
   openAquariums() {
-    this.viewChange.emit('cards'); // Placeholder, can be 'aquariums' if you create a new view
+    this.viewChange.emit('aquariums');
   }
 
   openStore() {
-    // You can add a store view later
-    this.viewChange.emit('menu'); // placeholder
+    alert('Store feature coming soon!');
   }
 
   saveAndQuit() {
-    // In a real app, you'd save state to localStorage or file system, then close
-    this.viewChange.emit('home'); // For now, just go back to home
+    window.location.href = 'https://www.google.ca';
   }
 }

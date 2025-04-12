@@ -1,12 +1,11 @@
 <div class="menu-container">
-    <h1 class="menu-title">MENU</h1>
-    <div class="button-stack">
-      <button class="cast-button" (click)="viewChange.emit('fishing')">Go Fishing</button>
-      <button class="cast-button" (click)="viewChange.emit('net')">Check Net</button>
-      <button class="cast-button">Aquariums</button>
-      <button class="cast-button">Store</button>
-      <button class="cast-button">Save and Quit</button>
-    </div>
-    <p class="menu-note">(Press ESC anytime to return here)</p>
+  <h1 class="menu-title">MENU</h1>
+  <div class="button-stack">
+    <button class="cast-button" (click)="goFishing()">Go Fishing</button>
+    <button class="cast-button" (click)="openNet()">Check Net</button>
+    <button class="cast-button" (click)="openAquariums()">Aquariums</button>
+    <button class="cast-button" (click)="openStore()">Store</button>
+    <button class="cast-button" (click)="saveAndQuit()">Save and Quit</button>
   </div>
-  
+  <p class="menu-note">(Press ESC anytime to return here)</p>
+</div>

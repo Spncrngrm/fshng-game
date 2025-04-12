@@ -75,6 +75,12 @@
   transform: scale(1.03);
 }
 
+.cast-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .caught-fish-image {
   position: fixed;
   top: 30%;

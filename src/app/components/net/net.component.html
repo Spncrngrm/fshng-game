@@ -9,9 +9,9 @@
     <img [src]="fish.image" [alt]="fish.name" />
     <div class="details">
       <strong>{{ fish.name }}</strong><br />
-      {{ fish.weight.toFixed(1) }} kg<br />
-      {{ fish.length.toFixed(1) }} cm<br />
-      ${{ fish.pricePerKg.toFixed(2) }} per kg
+      <span class="faint">{{ fish.weight.toFixed(1) }} kg</span><br />
+      <span class="faint">{{ fish.length.toFixed(1) }} cm</span><br />
+      <span class="faint">${{ fish.pricePerKg.toFixed(2) }} per kg</span>
     </div>
     <button class="sell-button" (click)="sellFish(i)">
       Sell: ${{ (fish.weight * fish.pricePerKg).toFixed(2) }}

@@ -1,0 +1,106 @@
+<div [class]="containerClass">
+  <!-- Selection Screen -->
+  <div class="aquarium-buttons" *ngIf="!selectedAquarium && !showOverlay && !sorting">
+    <h1 class="menu-title">Select Aquarium</h1>
+    <div class="button-stack">
+      <button class="menu-button" *ngFor="let num of [1, 2, 3, 4]" (click)="selectAquarium(num)">
+        Aquarium {{ num }}
+      </button>
+      <button class="menu-button" (click)="viewChange.emit('net')">Net</button>
+      <button class="menu-button" (click)="viewChange.emit('menu')">Return to Menu</button>
+    </div>
+  </div>
+
+  <!-- Fish Display & Actions -->
+  <div class="aquarium-screen" *ngIf="selectedAquarium && !showOverlay && !sorting">
+    <div class="aquarium-label">Aquarium {{ selectedAquarium }}</div>
+    <div class="grid-container">
+      <div *ngFor="let fish of aquariumFish; let i = index" class="grid-slot">
+        <div class="fish-tooltip">
+          <img *ngIf="fish" [src]="fish.image" [alt]="fish.name" />
+          <span class="tooltip-text">
+            {{ fish.name }}<br />
+            {{ fish.weight.toFixed(1) }} kg<br />
+            {{ fish.length.toFixed(1) }} cm<br />
+            ${{ (fish.weight * fish.pricePerKg).toFixed(2) }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="button-row">
+      <button class="cast-button" (click)="openOverlay()">Change Fish</button>
+      <button class="cast-button" (click)="openSort()">Sort Fish</button>
+      <button class="cast-button" (click)="goBack()">Go Back</button>
+    </div>
+  </div>
+
+  <!-- Sorting Visual View -->
+  <div class="aquarium-screen" *ngIf="sorting">
+    <div class="aquarium-label">{{ selectedSortAlgorithm }} - {{ selectedSortParameter }}</div>
+    <div class="grid-container">
+      <div *ngFor="let fish of aquariumFish" class="grid-slot highlight">
+        <div class="fish-tooltip">
+          <img *ngIf="fish" [src]="fish.image" [alt]="fish.name" />
+          <span class="tooltip-text">
+            {{ fish.name }}<br />
+            {{ getFishValue(fish, selectedSortParameter) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" *ngIf="showOverlay">
+    <div class="overlay-box">
+      <div class="overlay-header">
+        <div>Net: {{ gameState.net.length }}/{{ gameState.netCapacity }}</div>
+        <div>
+          Aquarium {{ selectedAquarium }}:
+          {{ gameState.aquariums[selectedAquarium! - 1].length }}/20
+        </div>
+      </div>
+      <div class="overlay-lists">
+        <div class="fish-list">
+          <h3>Net Fish</h3>
+          <div *ngFor="let fish of gameState.net; let i = index" class="fish-row">
+            {{ fish.name }}, {{ fish.weight.toFixed(1) }} kg, {{ fish.length.toFixed(1) }} cm
+            <button class="transfer-button" (click)="transferToAquarium(i)">➕</button>
+          </div>
+        </div>
+        <div class="fish-list">
+          <h3>Aquarium Fish</h3>
+          <div *ngFor="let fish of gameState.aquariums[selectedAquarium! - 1]; let i = index" class="fish-row">
+            {{ fish.name }}, {{ fish.weight.toFixed(1) }} kg, {{ fish.length.toFixed(1) }} cm
+            <button class="transfer-button" (click)="transferToNet(i)">➖</button>
+          </div>
+        </div>
+      </div>
+      <button class="menu-button close-button" (click)="closeOverlay()">Close</button>
+    </div>
+  </div>
+
+  <!-- Sort Menu -->
+  <div class="overlay" *ngIf="showSortMenu">
+    <div class="sort-box">
+      <h2>Choose Sorting Algorithm</h2>
+      <div class="sort-options">
+        <label *ngFor="let algo of algorithms">
+          <input type="radio" name="algorithm" [value]="algo" (change)="selectAlgorithm(algo)" [checked]="selectedSortAlgorithm === algo" />
+          {{ algo }}
+        </label>
+      </div>
+
+      <h2>Choose Parameter</h2>
+      <div class="sort-options">
+        <label *ngFor="let param of parameters">
+          <input type="radio" name="parameter" [value]="param" (change)="selectParameter(param)" [checked]="selectedSortParameter === param" />
+          {{ param }}
+        </label>
+      </div>
+
+      <button class="menu-button" (click)="performSort()">Start Sort</button>
+      <button class="menu-button close-button" (click)="closeSort()">Cancel</button>
+    </div>
+  </div>
+</div>

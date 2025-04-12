@@ -6,6 +6,7 @@ import { FishingComponent } from './components/fishing/fishing.component';
 import { NetComponent } from './components/net/net.component';
 import { FishService } from './services/fish.service';
 import { Fish } from './models/fish.model';
+import { AquariumsComponent } from './components/aquariums/aquariums.component'; 
 
 
 @Component({
@@ -16,13 +17,14 @@ import { Fish } from './models/fish.model';
     HomeComponent,
     MenuComponent,
     FishingComponent,
-    NetComponent
+    NetComponent,
+    AquariumsComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  view: 'home' | 'menu' | 'fishing' | 'net' = 'home';
+  view: 'home' | 'menu' | 'fishing' | 'net' | 'aquariums' = 'home';
 
   @HostListener('window:keydown.space', ['$event'])
   handleSpacePress(event: KeyboardEvent) {
@@ -38,8 +40,8 @@ export class AppComponent {
   }
 
   setView(view: string) {
-    if (['home', 'menu', 'fishing', 'net'].includes(view)) {
-      this.view = view as 'home' | 'menu' | 'fishing' | 'net';
+    if (['home', 'menu', 'fishing', 'net', 'aquariums'].includes(view)) {
+      this.view = view as 'home' | 'menu' | 'fishing' | 'net' | 'aquariums';
     }
   }
 }

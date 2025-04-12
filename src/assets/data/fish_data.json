@@ -7,7 +7,7 @@
     "rarity": "Uncommon",
     "weightMin": 0.5,
     "weightMax": 0.8,
-    "pricePerKg": 2.07,
+    "pricePerKg": 0.67,
     "image": "assets/fish/fish001_bubbler.png"
   },
   {
@@ -18,7 +18,7 @@
     "rarity": "Rare",
     "weightMin": 0.8,
     "weightMax": 1,
-    "pricePerKg": 5.53,
+    "pricePerKg": 1.53,
     "image": "assets/fish/fish002_coralfin.png"
   },
   {
@@ -29,7 +29,7 @@
     "rarity": "Uncommon",
     "weightMin": 0.2,
     "weightMax": 0.5,
-    "pricePerKg": 23.98,
+    "pricePerKg": 2.98,
     "image": "assets/fish/fish003_snapjack.png"
   },
   {
@@ -40,7 +40,7 @@
     "rarity": "Rare",
     "weightMin": 0.2,
     "weightMax": 0.5,
-    "pricePerKg": 32.28,
+    "pricePerKg": 3.28,
     "image": "assets/fish/fish004_glimmerfish.png"
   },
   {
@@ -51,7 +51,7 @@
     "rarity": "Legendary",
     "weightMin": 0.5,
     "weightMax": 0.8,
-    "pricePerKg": 13.83,
+    "pricePerKg": 1.83,
     "image": "assets/fish/fish005_shadowfin.png"
   }
 ]

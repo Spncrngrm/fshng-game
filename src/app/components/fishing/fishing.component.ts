@@ -28,14 +28,18 @@ export class FishingComponent {
   caughtFishImage: string | null = null;
   fishingInProgress = false;
 
-  constructor(private fishService: FishService, private gameState: GameStateService) {
+  constructor(private fishService: FishService, public gameState: GameStateService) {
     this.fishService.getFish().subscribe((fish) => {
       this.allFish = fish;
     });
   }
 
   startFishing() {
-    if (this.fishingInProgress) return;
+    if (this.fishingInProgress || this.gameState.isNetFull()) {
+      this.message = 'Your net is full! Sell some fish first.';
+      return;
+    }
+    
 
     this.fishingInProgress = true;
     this.bubbles = [];
@@ -45,7 +49,7 @@ export class FishingComponent {
 
     const bubbleCount = 5;
     const initialSize = 60;
-    const baseDelay = 1000;
+    const baseDelay = 800;
     const baseLifetime = 3000;
 
     for (let i = 0; i < bubbleCount; i++) {

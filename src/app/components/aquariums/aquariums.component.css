@@ -1,0 +1,257 @@
+.aquariums-container {
+  background-color: #0f3a5c; /* Dark blue default */
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  padding: 5rem;
+  box-sizing: border-box;
+}
+
+.aquarium-open {
+  background-color: #add8e6; /* Light blue when an aquarium is selected */
+  color: #003344;
+  padding: 2rem;
+}
+
+.aquarium-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.menu-button {
+  font-size: 1.5rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  background-color: #49a6e9;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.03);
+}
+
+.menu-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 0 #55889a;
+}
+
+.aquarium-screen {
+  text-align: center;
+  padding-top: 4rem;
+}
+
+.aquarium-label {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.button-row {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.cast-button {
+  font-size: 1.5rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  background-color: #49a6e9;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.cast-button:hover {
+  background-color: #3b8ac4;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(15, 58, 92, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-box {
+  background-color: #eaf6fb;
+  width: 80%;
+  height: 80%;
+  border-radius: 16px;
+  padding: 2rem;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.overlay-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.overlay-lists {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  overflow-y: auto;
+  gap: 2rem;
+}
+
+.fish-list {
+  flex: 1;
+}
+
+.fish-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.transfer-button {
+  background-color: #49a6e9;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.transfer-button:hover {
+  background-color: #3b8ac4;
+}
+
+.close-button {
+  align-self: center;
+  margin-top: 1rem;
+}
+
+.aquarium-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 20px;
+  padding: 2rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.aquarium-fish {
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+
+.aquarium-fish img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.aquarium-fish:hover img {
+  transform: scale(1.1);
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  grid-template-rows: repeat(4, 100px);
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.grid-slot {
+  background-color: #6696bb;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-slot img {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+}
+
+.fish-tooltip {
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: #fff;
+  color: #000;
+  text-align: left;
+  border-radius: 8px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1000;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.75rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.fish-tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+.sort-box {
+  background-color: #eaf6fb;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 60%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.sort-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1rem auto;
+}
+
+.sort-options label {
+  font-size: 1rem;
+  padding: 4px;
+}

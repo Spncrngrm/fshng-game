@@ -2,7 +2,7 @@
 
 
     git add .
-    git commit -m "redone CSS on home screen"
+    git commit -m "just fix the json and the the store"
     git push origin master:main --force
 
 

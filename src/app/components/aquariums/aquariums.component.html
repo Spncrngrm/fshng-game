@@ -1,17 +1,23 @@
 <div [class]="containerClass">
-  <!-- Selection Screen -->
+  <!-- Aquarium Selection -->
   <div class="aquarium-buttons" *ngIf="!selectedAquarium && !showOverlay && !sorting">
     <h1 class="menu-title">Select Aquarium</h1>
     <div class="button-stack">
-      <button class="menu-button" *ngFor="let num of [1, 2, 3, 4]" (click)="selectAquarium(num)">
+      <button
+        class="menu-button"
+        *ngFor="let num of [1, 2, 3, 4]"
+        (click)="selectAquarium(num)"
+        [disabled]="num > gameState.unlockedAquariums"
+        [class.locked]="num > gameState.unlockedAquariums">
         Aquarium {{ num }}
+        <span *ngIf="num > gameState.unlockedAquariums">: buy in store</span>
       </button>
       <button class="menu-button" (click)="viewChange.emit('net')">Net</button>
       <button class="menu-button" (click)="viewChange.emit('menu')">Return to Menu</button>
     </div>
   </div>
 
-  <!-- Fish Display & Actions -->
+  <!-- Fish Display -->
   <div class="aquarium-screen" *ngIf="selectedAquarium && !showOverlay && !sorting">
     <div class="aquarium-label">Aquarium {{ selectedAquarium }}</div>
     <div class="grid-container">
@@ -21,8 +27,9 @@
           <span class="tooltip-text">
             {{ fish.name }}<br />
             {{ fish.weight.toFixed(1) }} kg<br />
-            {{ fish.length.toFixed(1) }} cm<br />
-            ${{ (fish.weight * fish.pricePerKg).toFixed(2) }}
+            <ng-container *ngIf="getTooltipExtra(fish)">
+              {{ getTooltipExtra(fish) }}
+            </ng-container>
           </span>
         </div>
       </div>
@@ -34,23 +41,31 @@
     </div>
   </div>
 
-  <!-- Sorting Visual View -->
+  <!-- Sorting Animation -->
   <div class="aquarium-screen" *ngIf="sorting">
     <div class="aquarium-label">{{ selectedSortAlgorithm }} - {{ selectedSortParameter }}</div>
     <div class="grid-container">
-      <div *ngFor="let fish of aquariumFish" class="grid-slot highlight">
-        <div class="fish-tooltip">
-          <img *ngIf="fish" [src]="fish.image" [alt]="fish.name" />
+      <div *ngFor="let fish of aquariumFish; let i = index"
+           class="grid-slot"
+           [ngClass]="{
+             'highlight': highlightIndex.includes(i),
+             'invisible': invisibleIndexes.includes(i)
+           }">
+        <div class="fish-tooltip" *ngIf="!invisibleIndexes.includes(i)">
+          <img [src]="fish.image" [alt]="fish.name" />
           <span class="tooltip-text">
             {{ fish.name }}<br />
-            {{ getFishValue(fish, selectedSortParameter) }}
+            {{ fish.weight.toFixed(1) }} kg<br />
+            <ng-container *ngIf="getTooltipExtra(fish)">
+              {{ getTooltipExtra(fish) }}
+            </ng-container>
           </span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Overlay -->
+  <!-- Fish Transfer Overlay -->
   <div class="overlay" *ngIf="showOverlay">
     <div class="overlay-box">
       <div class="overlay-header">
@@ -80,21 +95,32 @@
     </div>
   </div>
 
-  <!-- Sort Menu -->
+  <!-- Sort Menu Overlay -->
   <div class="overlay" *ngIf="showSortMenu">
     <div class="sort-box">
       <h2>Choose Sorting Algorithm</h2>
       <div class="sort-options">
         <label *ngFor="let algo of algorithms">
-          <input type="radio" name="algorithm" [value]="algo" (change)="selectAlgorithm(algo)" [checked]="selectedSortAlgorithm === algo" />
-          {{ algo }}
+          <input
+            type="radio"
+            name="algorithm"
+            [value]="algo"
+            (change)="selectAlgorithm(algo)"
+            [checked]="selectedSortAlgorithm === algo"
+            [disabled]="!isAlgorithmUnlocked(algo)" />
+          {{ algo }} <span *ngIf="!isAlgorithmUnlocked(algo)">buy in store</span>
         </label>
       </div>
 
       <h2>Choose Parameter</h2>
       <div class="sort-options">
         <label *ngFor="let param of parameters">
-          <input type="radio" name="parameter" [value]="param" (change)="selectParameter(param)" [checked]="selectedSortParameter === param" />
+          <input
+            type="radio"
+            name="parameter"
+            [value]="param"
+            (change)="selectParameter(param)"
+            [checked]="selectedSortParameter === param" />
           {{ param }}
         </label>
       </div>

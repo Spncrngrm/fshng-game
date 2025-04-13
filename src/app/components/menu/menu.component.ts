@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  @Output() viewChange = new EventEmitter<'home' | 'menu' | 'fishing' | 'net' | 'aquariums'>();
+  @Output() viewChange = new EventEmitter<'home' | 'menu' | 'fishing' | 'net' | 'aquariums' | 'store'>();
 
   goFishing() {
     this.viewChange.emit('fishing');
@@ -22,7 +22,7 @@ export class MenuComponent {
   }
 
   openStore() {
-    alert('Store feature coming soon!');
+    this.viewChange.emit('store');
   }
 
   saveAndQuit() {

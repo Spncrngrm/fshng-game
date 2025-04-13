@@ -39,7 +39,6 @@ export class FishingComponent {
       this.message = 'Your net is full! Sell some fish first.';
       return;
     }
-    
 
     this.fishingInProgress = true;
     this.bubbles = [];
@@ -83,19 +82,36 @@ export class FishingComponent {
   }
 
   catchFish() {
-    const roll = Math.floor(Math.random() * 10001);
+    const unlocked = this.gameState.unlockedFishCount;
+    const pool = this.allFish.slice(0, unlocked);
 
+    const rarityMap = {
+      Common: 0,
+      Uncommon: 1,
+      Rare: 2,
+      Epic: 3,
+      Legendary: 4
+    } as const;
+
+    const table: Record<number, Fish[]> = { 0: [], 1: [], 2: [], 3: [], 4: [] };
+    for (const fish of pool) {
+      table[rarityMap[fish.rarity]].push(fish);
+    }
+
+    const roll = Math.floor(Math.random() * 10001);
     const rarityTable = [
-      { index: 0, min: 0, max: 3999 },
-      { index: 1, min: 4000, max: 4999 },
-      { index: 2, min: 5000, max: 8999 },
-      { index: 3, min: 9000, max: 9999 },
-      { index: 4, min: 10000, max: 10000 }
+      { rarity: 'Common', min: 0, max: 3999 },
+      { rarity: 'Uncommon', min: 4000, max: 4999 },
+      { rarity: 'Rare', min: 5000, max: 8999 },
+      { rarity: 'Epic', min: 9000, max: 9999 },
+      { rarity: 'Legendary', min: 10000, max: 10000 }
     ];
 
     const matched = rarityTable.find(r => roll >= r.min && roll <= r.max);
-    if (matched && this.allFish[matched.index]) {
-      const fish = this.allFish[matched.index];
+    const available = matched ? table[rarityMap[matched.rarity as keyof typeof rarityMap]] : [];
+
+    if (available.length) {
+      const fish = available[Math.floor(Math.random() * available.length)];
       const length = this.randomInRange(fish.lengthMin, fish.lengthMax);
       const weight = this.randomInRange(fish.weightMin, fish.weightMax);
 

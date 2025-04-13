@@ -1,0 +1,40 @@
+<div class="aquariums-container">
+  <h1 class="menu-title">Store</h1>
+  <div class="gold-display">Gold: {{ gameState.gold.toFixed(2) }}G</div>
+  <div class="button-stack">
+    
+    <!-- Unlock Fish Button -->
+    <button class="menu-button"
+            (click)="unlockFish()"
+            [disabled]="!canAffordFish()">
+      Unlock Fish {{ gameState.unlockedFishCount + 1 }}–{{ gameState.unlockedFishCount + 5 }} ({{ fishPrice }}g)
+    </button>
+
+    <!-- Unlock Aquarium Button -->
+    <button class="menu-button"
+            (click)="unlockAquarium()"
+            [disabled]="!canAffordAquarium()">
+      Unlock Aquarium #{{ gameState.unlockedAquariums + 1 }} ({{ aquariumPrice }}g)
+    </button>
+
+    <!-- Unlock Sorting Algorithm Button -->
+    <button class="menu-button"
+            (click)="unlockSort()"
+            [disabled]="!canAffordSort()">
+      Unlock {{ gameState.unlockedAlgorithms.length === 1 ? 'Selection' :
+                gameState.unlockedAlgorithms.length === 2 ? 'Insertion' :
+                gameState.unlockedAlgorithms.length === 3 ? 'Champagne' :
+                'Gnome' }} Sort ({{ sortPrice }}g)
+    </button>
+
+    <!-- Unlock Net Slot Button -->
+    <button class="menu-button"
+            (click)="unlockNetSlot()"
+            [disabled]="!canAffordNet()">
+      Unlock Net Slot #{{ gameState.netCapacity + 1 }} ({{ netSlotPrice }}g)
+    </button>
+
+    <!-- Back to Menu -->
+    <button class="menu-button" (click)="viewChange.emit('menu')">Return to Menu</button>
+  </div>
+</div>

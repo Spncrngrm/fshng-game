@@ -16,7 +16,13 @@
   <div
     *ngFor="let bubble of bubbles; let i = index"
     class="bubble"
-    [ngStyle]="{ top: bubble.y + 'px', left: bubble.x + 'px', width: bubble.size + 'px', height: bubble.size + 'px', backgroundColor: bubble.clicked ? '#0f3a5c' : 'rgba(173, 216, 230, 0.8)' }"
-    (click)="clickBubble(i)"
-  ></div>
+    [ngStyle]="{ 
+      top: bubble.y + 'px', 
+      left: bubble.x + 'px', 
+      width: bubble.size + 'px', 
+      height: bubble.size + 'px', 
+      backgroundColor: bubble.clicked ? '#0f3a5c' : 'rgba(173, 216, 230, 0.8)' 
+    }"
+    (click)="clickBubble(i)">
+  </div>
 </div>

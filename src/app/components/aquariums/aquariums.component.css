@@ -1,5 +1,5 @@
 .aquariums-container {
-  background-color: #0f3a5c; /* Dark blue default */
+  background-color: #0f3a5c;
   height: 100vh;
   width: 100%;
   position: relative;
@@ -10,7 +10,7 @@
 }
 
 .aquarium-open {
-  background-color: #add8e6; /* Light blue when an aquarium is selected */
+  background-color: #add8e6;
   color: #003344;
   padding: 2rem;
 }
@@ -31,6 +31,8 @@
 .menu-button {
   font-size: 1.5rem;
   padding: 0.75rem 2rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
   border: none;
   background-color: #49a6e9;
   color: white;
@@ -43,6 +45,14 @@
 .menu-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: scale(1.03);
+}
+
+.menu-button:disabled {
+  background-color: #a0a0a0;
+  color: #ddd;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 .menu-title {
@@ -85,6 +95,20 @@
 
 .cast-button:hover {
   background-color: #3b8ac4;
+}
+
+.cast-button:disabled {
+  background-color: #a0a0a0;
+  color: #ddd;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.locked {
+  background-color: #777 !important;
+  color: #ccc !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
 }
 
 .overlay {
@@ -157,35 +181,6 @@
   margin-top: 1rem;
 }
 
-.aquarium-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  gap: 20px;
-  padding: 2rem;
-  justify-items: center;
-  align-items: center;
-}
-
-.aquarium-fish {
-  width: 64px;
-  height: 64px;
-  position: relative;
-}
-
-.aquarium-fish img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  image-rendering: pixelated;
-  border-radius: 8px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
-}
-
-.aquarium-fish:hover img {
-  transform: scale(1.1);
-}
 .grid-container {
   display: grid;
   grid-template-columns: repeat(5, 100px);
@@ -202,12 +197,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s, opacity 0.3s;
 }
 
 .grid-slot img {
   width: 64px;
   height: 64px;
   image-rendering: pixelated;
+}
+
+.highlight {
+  background-color: #ffcc00 !important;
+}
+
+.invisible {
+  opacity: 0;
 }
 
 .fish-tooltip {
@@ -248,10 +252,18 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1rem auto;
+  margin: 2rem auto;
 }
 
 .sort-options label {
   font-size: 1rem;
   padding: 4px;
+}
+
+.sort-options input[disabled] + span,
+.sort-options input[disabled] + label,
+.sort-options input[disabled] ~ * {
+  color: #999 !important;
+  text-decoration: line-through;
+  cursor: not-allowed;
 }

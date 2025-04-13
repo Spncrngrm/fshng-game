@@ -1,0 +1,70 @@
+/* Base store container */
+.aquariums-container {
+    background-color: #0f3a5c;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    padding: 5rem;
+    box-sizing: border-box;
+  }
+  
+  /* Title styling */
+  .menu-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 2px 2px 0 #55889a;
+  }
+  
+  /* Button stack layout */
+  .button-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  
+  /* Primary buttons */
+  .menu-button {
+    font-size: 1.5rem;
+    padding: 0.75rem 2rem;
+    margin: 0.5rem;
+    width: 30%;
+    border: none;
+    background-color: #49a6e9;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .menu-button:hover:enabled {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.03);
+  }
+  
+  /* Disabled state (greyed out) */
+  .menu-button:disabled {
+    background-color: #888888;
+    color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+  
+  .gold-display {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd700; /* Dark text on light yellow */
+    background-color: #49a6e9; /* Bright gold background */
+    padding: 0.5rem 1.25rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    font-family: 'Arial', sans-serif;
+  }

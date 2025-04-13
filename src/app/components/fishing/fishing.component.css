@@ -15,8 +15,13 @@
 }
 
 @keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; transform: scale(0.5); }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
 }
 
 .message {
@@ -26,6 +31,8 @@
   transform: translateX(-50%);
   font-size: 2rem;
   color: #fff;
+  text-align: center;
+  padding: 0 1rem;
 }
 
 .start-area {
@@ -38,8 +45,8 @@
 }
 
 .menu-button {
-  position:absolute;
-  top:85%;
+  position: absolute;
+  top: 85%;
   font-size: 1.5rem;
   padding: 0.75rem 2rem;
   border: none;
@@ -50,15 +57,9 @@
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
-.menu-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.03);
-}
-
 .cast-button {
-  position:absolute;
-  top:75%;
+  position: absolute;
+  top: 75%;
   font-size: 1.5rem;
   padding: 0.75rem 2rem;
   border: none;
@@ -70,6 +71,7 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.menu-button:hover,
 .cast-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: scale(1.03);

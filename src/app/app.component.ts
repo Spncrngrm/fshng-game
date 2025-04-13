@@ -7,6 +7,7 @@ import { NetComponent } from './components/net/net.component';
 import { FishService } from './services/fish.service';
 import { Fish } from './models/fish.model';
 import { AquariumsComponent } from './components/aquariums/aquariums.component'; 
+import { StoreComponent } from './components/store/store.component';
 
 
 @Component({
@@ -18,13 +19,14 @@ import { AquariumsComponent } from './components/aquariums/aquariums.component';
     MenuComponent,
     FishingComponent,
     NetComponent,
-    AquariumsComponent
+    AquariumsComponent,
+    StoreComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  view: 'home' | 'menu' | 'fishing' | 'net' | 'aquariums' = 'home';
+  view: 'home' | 'menu' | 'fishing' | 'net' | 'aquariums' | 'store' = 'home';
 
   @HostListener('window:keydown.space', ['$event'])
   handleSpacePress(event: KeyboardEvent) {
@@ -40,8 +42,8 @@ export class AppComponent {
   }
 
   setView(view: string) {
-    if (['home', 'menu', 'fishing', 'net', 'aquariums'].includes(view)) {
-      this.view = view as 'home' | 'menu' | 'fishing' | 'net' | 'aquariums';
+    if (['home', 'menu', 'fishing', 'net', 'aquariums', 'store'].includes(view)) {
+      this.view = view as 'home' | 'menu' | 'fishing' | 'net' | 'aquariums' | 'store';
     }
   }
 }

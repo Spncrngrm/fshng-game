@@ -2,7 +2,7 @@
 
 
     git add .
-    git commit -m "just fix the json and the the store"
+    git commit -m "ran tests and recorded errors in testing.md"
     git push origin master:main --force
 
 

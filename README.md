@@ -2,7 +2,7 @@
 
 
     git add .
-    git commit -m "ran tests and recorded errors in testing.md"
+    git commit -m "fixed inconsistant highlight timing on sorting algorithms"
     git push origin master:main --force
 
 

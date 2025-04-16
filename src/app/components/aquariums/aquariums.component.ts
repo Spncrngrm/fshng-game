@@ -128,9 +128,11 @@ export class AquariumsComponent {
   }
 
   private async highlight(i: number): Promise<void> {
+    await this.wait(100);
     this.highlightIndex = [i];
     await this.wait(1500);
     this.highlightIndex = [];
+    await this.wait(100);
   }
 
   private async animateSwap(i: number, j: number): Promise<void> {

@@ -93,7 +93,7 @@ export class FishingComponent {
   catchFish() {
     const unlocked = this.gameState.unlockedFishCount;
     const pool = this.allFish.slice(0, unlocked);
-
+  
     const rarityGroups: { [key in 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary']: Fish[] } = {
       Common: [],
       Uncommon: [],
@@ -101,42 +101,52 @@ export class FishingComponent {
       Epic: [],
       Legendary: []
     };
-
+  
     for (const fish of pool) {
       rarityGroups[fish.rarity].push(fish);
     }
-
+  
     const roll = Math.floor(Math.random() * 10001);
-
-    let selectedRarity: keyof typeof rarityGroups;
-    if (roll <= 3999) selectedRarity = 'Common';
-    else if (roll <= 4999) selectedRarity = 'Uncommon';
-    else if (roll <= 8999) selectedRarity = 'Rare';
-    else if (roll <= 9999) selectedRarity = 'Epic';
-    else selectedRarity = 'Legendary';
-
-    const availableFish = rarityGroups[selectedRarity];
-
-    // Always clear timers no matter what
+  
+    let intendedRarity: keyof typeof rarityGroups;
+    if (roll <= 3999) intendedRarity = 'Common';
+    else if (roll <= 4999) intendedRarity = 'Uncommon';
+    else if (roll <= 8999) intendedRarity = 'Rare';
+    else if (roll <= 9999) intendedRarity = 'Epic';
+    else intendedRarity = 'Legendary';
+  
+    const rarityPriority: (keyof typeof rarityGroups)[] = ['Legendary', 'Epic', 'Rare', 'Uncommon', 'Common'];
+  
+    let selectedFish: Fish | null = null;
+    let rarityIndex = rarityPriority.indexOf(intendedRarity);
+  
+    while (rarityIndex >= 0) {
+      const candidates = rarityGroups[rarityPriority[rarityIndex]];
+      if (candidates.length > 0) {
+        selectedFish = candidates[Math.floor(Math.random() * candidates.length)];
+        break;
+      }
+      rarityIndex--; // Try the next lower rarity
+    }
+  
     this.bubbleTimers.forEach(clearTimeout);
     this.bubbleTimers = [];
-
-    if (availableFish.length > 0) {
-      const fish = availableFish[Math.floor(Math.random() * availableFish.length)];
-      const length = this.randomInRange(fish.lengthMin, fish.lengthMax);
-      const weight = this.randomInRange(fish.weightMin, fish.weightMax);
-
+  
+    if (selectedFish) {
+      const length = this.randomInRange(selectedFish.lengthMin, selectedFish.lengthMax);
+      const weight = this.randomInRange(selectedFish.weightMin, selectedFish.weightMax);
+  
       const caughtFish: Fish = {
-        ...fish,
+        ...selectedFish,
         length,
         weight
       };
-
+  
       this.message = `You caught a ${caughtFish.name}! (${weight.toFixed(1)} kg, ${length.toFixed(1)} cm)`;
       this.caughtFishImage = caughtFish.image ?? null;
       this.bubbles = [];
       this.fishingInProgress = false;
-
+  
       this.gameState.addToNet(caughtFish);
     } else {
       this.message = 'Nothing caught!';
@@ -145,6 +155,7 @@ export class FishingComponent {
       this.fishingInProgress = false;
     }
   }
+  
 
   failCatch() {
     // Clear all timers immediately

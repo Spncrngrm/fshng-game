@@ -2,7 +2,7 @@
 
 
     git add .
-    git commit -m "fixed inconsistant highlight timing on sorting algorithms"
+    git commit -m "fixed bubble generation inconsistancies after a caught or missed fish"
     git push origin master:main --force
 
 

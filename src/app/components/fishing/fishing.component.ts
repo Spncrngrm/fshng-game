@@ -27,6 +27,7 @@ export class FishingComponent {
   allFish: Fish[] = [];
   caughtFishImage: string | null = null;
   fishingInProgress = false;
+  private bubbleTimers: any[] = []; // NEW: To keep track of timeouts
 
   constructor(private fishService: FishService, public gameState: GameStateService) {
     this.fishService.getFish().subscribe((fish) => {
@@ -39,6 +40,10 @@ export class FishingComponent {
       this.message = 'Your net is full! Sell some fish first.';
       return;
     }
+
+    // Clear previous timers
+    this.bubbleTimers.forEach(clearTimeout);
+    this.bubbleTimers = [];
 
     this.fishingInProgress = true;
     this.bubbles = [];
@@ -56,16 +61,20 @@ export class FishingComponent {
       const x = Math.random() * (window.innerWidth - size);
       const y = Math.random() * (window.innerHeight - size);
 
-      setTimeout(() => {
+      const spawnTimeout = setTimeout(() => {
         if (!this.fishingInProgress) return;
         this.bubbles.push({ x, y, size, clicked: false });
 
-        setTimeout(() => {
+        const lifetimeTimeout = setTimeout(() => {
           if (this.currentIndex <= i && this.fishingInProgress) {
             this.failCatch();
           }
         }, baseLifetime);
+        this.bubbleTimers.push(lifetimeTimeout);
+
       }, i * baseDelay);
+
+      this.bubbleTimers.push(spawnTimeout);
     }
   }
 
@@ -85,33 +94,35 @@ export class FishingComponent {
     const unlocked = this.gameState.unlockedFishCount;
     const pool = this.allFish.slice(0, unlocked);
 
-    const rarityMap = {
-      Common: 0,
-      Uncommon: 1,
-      Rare: 2,
-      Epic: 3,
-      Legendary: 4
-    } as const;
+    const rarityGroups: { [key in 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Legendary']: Fish[] } = {
+      Common: [],
+      Uncommon: [],
+      Rare: [],
+      Epic: [],
+      Legendary: []
+    };
 
-    const table: Record<number, Fish[]> = { 0: [], 1: [], 2: [], 3: [], 4: [] };
     for (const fish of pool) {
-      table[rarityMap[fish.rarity]].push(fish);
+      rarityGroups[fish.rarity].push(fish);
     }
 
     const roll = Math.floor(Math.random() * 10001);
-    const rarityTable = [
-      { rarity: 'Common', min: 0, max: 3999 },
-      { rarity: 'Uncommon', min: 4000, max: 4999 },
-      { rarity: 'Rare', min: 5000, max: 8999 },
-      { rarity: 'Epic', min: 9000, max: 9999 },
-      { rarity: 'Legendary', min: 10000, max: 10000 }
-    ];
 
-    const matched = rarityTable.find(r => roll >= r.min && roll <= r.max);
-    const available = matched ? table[rarityMap[matched.rarity as keyof typeof rarityMap]] : [];
+    let selectedRarity: keyof typeof rarityGroups;
+    if (roll <= 3999) selectedRarity = 'Common';
+    else if (roll <= 4999) selectedRarity = 'Uncommon';
+    else if (roll <= 8999) selectedRarity = 'Rare';
+    else if (roll <= 9999) selectedRarity = 'Epic';
+    else selectedRarity = 'Legendary';
 
-    if (available.length) {
-      const fish = available[Math.floor(Math.random() * available.length)];
+    const availableFish = rarityGroups[selectedRarity];
+
+    // Always clear timers no matter what
+    this.bubbleTimers.forEach(clearTimeout);
+    this.bubbleTimers = [];
+
+    if (availableFish.length > 0) {
+      const fish = availableFish[Math.floor(Math.random() * availableFish.length)];
       const length = this.randomInRange(fish.lengthMin, fish.lengthMax);
       const weight = this.randomInRange(fish.weightMin, fish.weightMax);
 
@@ -136,6 +147,10 @@ export class FishingComponent {
   }
 
   failCatch() {
+    // Clear all timers immediately
+    this.bubbleTimers.forEach(clearTimeout);
+    this.bubbleTimers = [];
+
     this.message = 'The fish escaped!';
     this.caughtFishImage = null;
     this.bubbles = [];

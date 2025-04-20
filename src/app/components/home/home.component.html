@@ -1,12 +1,20 @@
-<div class="home-container">
-    <h1 class="title">FSHNG</h1>
-  
-    <div class="sprite-preview">
-      <img src="assets/fish/fish002_coralfin.png" alt="Coralfin" />
-      <img src="assets/fish/fish001_bubbler.png" alt="Bubbler" />
-      <img src="assets/fish/fish003_snapjack.png" alt="Snapjack" />
+<div class="home-container" [class.started]="spacePressed">
+  <div class="bubbles">
+    <div *ngFor="let bubble of bubbles"
+         class="bubble"
+         [style.left.%]="bubble.left"
+         [style.animation-delay.s]="bubble.delay">
     </div>
-  
-    <p class="instruction">Press <strong>SPACE</strong> to start</p>
   </div>
-  
+
+  <h1 class="title" [class.title-animate]="animateSprites">FSHNG</h1>
+
+  <div class="sprite-preview" [class.animate]="animateSprites">
+    <img src="assets/fish/fish002_coralfin.png" alt="Coralfin" />
+    <img src="assets/fish/fish001_bubbler.png" alt="Bubbler" />
+    <img src="assets/fish/fish003_snapjack.png" alt="Snapjack" />
+  </div>
+
+  <p class="instruction" *ngIf="!spacePressed">Press <strong>SPACE</strong> to start</p>
+  <p class="instruction start-text" *ngIf="spacePressed">Let's go fishing!</p>
+</div>

@@ -2,7 +2,7 @@
 
 
     git add .
-    git commit -m "fixed bubble generation inconsistancies after a caught or missed fish"
+    git commit -m "corrected fish unlocking and caught fish selecting mehtods."
     git push origin master:main --force
 
 
